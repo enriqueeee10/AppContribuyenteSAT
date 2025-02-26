@@ -1,29 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_rest/pages/registrationPage.dart';
 // import 'package:flutter_application_rest/pages/DeudaScreen.dart';
 import 'package:flutter_application_rest/pages/screen_deudas.dart';
-
-void main() {
-  runApp(const MyApp());
-}
+import 'package:flutter_application_rest/widgets/contacto_opcion.dart';
 
 final _formKey = GlobalKey<FormState>();
-
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: LoginScreen(),
-    );
-  }
-}
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
 
   @override
+  // ignore: library_private_types_in_public_api
   _LoginScreenState createState() => _LoginScreenState();
 }
 
@@ -82,19 +69,19 @@ class _LoginScreenState extends State<LoginScreen> {
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
             colors: [
-              Color.fromARGB(255, 5, 251, 112),
-              Color.fromARGB(255, 29, 5, 237)
+              Color.fromARGB(255, 76, 220, 14),
+              Color.fromARGB(255, 63, 84, 163)
             ],
           ),
         ),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             // Logo
             Image.asset(
-              "assets/logopeque.png",
-              height: 200, // Ajusta la altura según sea necesario
-              width: 200, // Ajusta el ancho según sea necesario
+              "assets/sat-logo.png",
+              height: 150, // Ajusta la altura según sea necesario
+              width: 250, // Ajusta el ancho según sea necesario
               fit: BoxFit.contain,
             ),
 
@@ -105,12 +92,12 @@ class _LoginScreenState extends State<LoginScreen> {
                 padding: const EdgeInsets.all(20),
                 decoration: BoxDecoration(
                   color: Colors.white,
-                  borderRadius: BorderRadius.circular(10),
+                  borderRadius: BorderRadius.circular(20),
                   boxShadow: [
                     BoxShadow(
                       color: Colors.black26,
-                      blurRadius: 5,
-                      offset: Offset(0, 3),
+                      blurRadius: 400,
+                      offset: Offset(0, 5),
                     ),
                   ],
                 ),
@@ -171,9 +158,29 @@ class _LoginScreenState extends State<LoginScreen> {
                         },
                       ),
 
-                      const SizedBox(height: 15),
+                      const SizedBox(height: 20),
 
-                      // Botón Iniciar Sesión
+                      // Botón Consultar Deuda
+
+                      // Botón Registrarse
+                      ElevatedButton(
+                        onPressed: () {
+                          // Navegar a la página de registro
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => RegistratonPage()),
+                          );
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.blue,
+                          foregroundColor: Colors.white,
+                          minimumSize: Size(double.infinity, 45.0),
+                        ),
+                        child: const Text("REGISTRARSE"),
+                      ),
+                      const SizedBox(height: 10),
+
                       ElevatedButton(
                         onPressed: () {
                           _formKey.currentState!.validate();
@@ -186,7 +193,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           backgroundColor:
                               isButtonEnabled ? Colors.green : Colors.grey,
                           foregroundColor: Colors.white,
-                          minimumSize: Size(double.infinity, 45),
+                          minimumSize: Size(double.infinity, 45.0),
                         ),
                         child: const Text("CONSULTAR DEUDA"),
                       ),
@@ -197,48 +204,24 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
             ),
             const SizedBox(height: 25),
-
-            // Opciones inferiores (Contacto, Ubícanos)
-            // Padding(
-            //   padding: const EdgeInsets.symmetric(horizontal: 30),
-            //   child: Row(
-            //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            //     children: [
-            //       contactoOpcion(Icons.phone, "Contacto"),
-            //       contactoOpcion(Icons.location_on, "Ubícanos"),
-            //     ],
-            //   ),
-            // ),
-
-            // const SizedBox(height: 20),
-
-            // Redes Sociales
-            // Row(
-            //   mainAxisAlignment: MainAxisAlignment.center,
-            //   children: [
-            //     const SizedBox(width: 10),
-            //     const Text(
-            //       "SAT TARAPOTO",
-            //       style: TextStyle(color: Colors.white),
-            //     ),
-            //   ],
-            // ),
+            // Contacto
+            Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: const [
+                  ContactoOpcion(
+                    icon: Icons.phone,
+                    texto: "Contáctenos",
+                    url: "tel:938553393",
+                  ),
+                  ContactoOpcion(
+                    icon: Icons.facebook,
+                    texto: "SAT Tarapoto",
+                    url: "",
+                  ),
+                ])
           ],
         ),
       ),
     );
   }
-
-  // Widget contactoOpcion(IconData icon, String texto) {
-  //   return Column(
-  //     children: [
-  //       Icon(icon, color: Colors.white),
-  //       const SizedBox(height: 5),
-  //       Text(
-  //         texto,
-  //         style: const TextStyle(color: Colors.white),
-  //       ),
-  //     ],
-  //   );
-  // }
 }

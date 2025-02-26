@@ -9,10 +9,10 @@ class ContribuyenteCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
-      elevation: 5,
+      elevation: 10,
       color: const Color.fromARGB(255, 233, 245, 234),
       child: Padding(
-        padding: EdgeInsets.all(16.0),
+        padding: EdgeInsets.all(12.0),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -27,7 +27,7 @@ class ContribuyenteCard extends StatelessWidget {
                 style: TextStyle(fontSize: 12)),
             Text("Calificación: ${contribuyente["calificacion"]}",
                 style: TextStyle(
-                    fontSize: 16,
+                    fontSize: 14,
                     color: const Color.fromARGB(255, 22, 124, 2),
                     fontWeight: FontWeight.bold)),
           ],

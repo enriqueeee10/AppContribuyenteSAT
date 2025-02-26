@@ -12,7 +12,11 @@ class TotalPagar extends StatelessWidget {
         Text("Total a pagar: S/. ${montoTotal.toStringAsFixed(2)}",
             style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
         ElevatedButton(
-          onPressed: montoTotal > 0 ? () {} : null,
+          onPressed: montoTotal > 0
+              ? () {
+                  // Lógica para pagar la deuda
+                }
+              : null,
           style: ElevatedButton.styleFrom(
               backgroundColor: Color.fromARGB(255, 54, 226, 45),
               padding: EdgeInsets.symmetric(horizontal: 50, vertical: 15),

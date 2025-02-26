@@ -17,7 +17,7 @@ class ApiService {
         }
       }
     } catch (e) {
-      print("Error al obtener datos: $e");
+      throw ("Error al obtener datos: $e");
     }
 
     return null;

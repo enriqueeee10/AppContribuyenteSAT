@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import '../widgets/contribuyente_card.dart';
 import '../widgets/cuota_table.dart';
-import '../widgets/total_pagar.dart';
+import 'package:webview_flutter/webview_flutter.dart'; // Importa el WebView
 
 class DeudasPage extends StatefulWidget {
   final String email;
@@ -12,6 +12,7 @@ class DeudasPage extends StatefulWidget {
   const DeudasPage({super.key, required this.email, required this.codigo});
 
   @override
+  // ignore: library_private_types_in_public_api
   _DeudasPageState createState() => _DeudasPageState();
 }
 
@@ -19,7 +20,6 @@ class _DeudasPageState extends State<DeudasPage> {
   Map<String, dynamic>? contribuyente;
   List<Map<String, dynamic>> cuotas = [];
   Map<int, bool> seleccionadas = {};
-  double montoTotal = 0.0;
   bool isLoading = true;
   String errorMessage = '';
 
@@ -64,26 +64,41 @@ class _DeudasPageState extends State<DeudasPage> {
     }
   }
 
-  void actualizarMontoTotal() {
-    double nuevoMontoTotal = 0.0;
-    seleccionadas.forEach((index, isSelected) {
-      if (isSelected) {
-        nuevoMontoTotal += cuotas[index]['insoluto'] +
-            cuotas[index]['reajuste'] +
-            cuotas[index]['interes'] +
-            cuotas[index]['gasto'];
-      }
-    });
-    setState(() {
-      montoTotal = nuevoMontoTotal;
-    });
+  // Mostrar el diálogo de advertencia
+  void mostrarAdvertencia() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text("Aviso de Redirección"),
+          content: Text(
+              "Estimado contribuyente, usted está siendo redireccionado a una página segura, por favor vuelva a ingresar su código de contribuyente."),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text("Cancelar"),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.of(context).pop(); // Cierra el diálogo
+                irAlPago(); // Navega al WebView
+              },
+              child: Text("Continuar"),
+            ),
+          ],
+        );
+      },
+    );
   }
 
-  void seleccionarTodos(bool value) {
-    setState(() {
-      seleccionadas.updateAll((key, _) => value);
-      actualizarMontoTotal();
-    });
+  // Navegar al WebView
+  void irAlPago() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => DeudasWebView()),
+    );
   }
 
   @override
@@ -99,11 +114,11 @@ class _DeudasPageState extends State<DeudasPage> {
               : contribuyente == null
                   ? Center(child: Text('No hay datos disponibles'))
                   : Padding(
-                      padding: EdgeInsets.all(16.0),
+                      padding: EdgeInsets.all(8.0),
                       child: Column(
                         children: [
                           ContribuyenteCard(contribuyente: contribuyente!),
-                          SizedBox(height: 16),
+                          SizedBox(height: 5),
                           Expanded(
                             child: CuotaTable(
                               cuotas: cuotas,
@@ -111,24 +126,70 @@ class _DeudasPageState extends State<DeudasPage> {
                               onSelectionChanged: (index, value) {
                                 setState(() {
                                   seleccionadas[index] = value;
-                                  actualizarMontoTotal();
                                 });
                               },
-                              onSelectAll: seleccionarTodos,
+                              onSelectAll: (value) {
+                                setState(() {
+                                  seleccionadas.updateAll((key, _) => value);
+                                });
+                              },
                             ),
                           ),
-                          TotalPagar(montoTotal: montoTotal),
+                          SizedBox(height: 20),
+                          ElevatedButton(
+                            onPressed: mostrarAdvertencia, // Siempre habilitado
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Color.fromARGB(255, 54, 226, 45),
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 50, vertical: 15),
+                              textStyle: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            child: Text("Pagar"),
+                          ),
+                          SizedBox(height: 80),
                         ],
                       ),
                     ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => Navigator.pop(context),
-        backgroundColor: const Color.fromARGB(255, 49, 68, 239),
+        backgroundColor: const Color.fromARGB(255, 4, 167, 39),
         child: Icon(
           Icons.logout,
           color: Color.fromARGB(255, 255, 255, 255),
         ),
       ),
+    );
+  }
+}
+
+class DeudasWebView extends StatefulWidget {
+  const DeudasWebView({super.key});
+
+  @override
+  // ignore: library_private_types_in_public_api
+  _DeudasWebViewState createState() => _DeudasWebViewState();
+}
+
+class _DeudasWebViewState extends State<DeudasWebView> {
+  late final WebViewController controller;
+
+  @override
+  void initState() {
+    super.initState();
+    controller = WebViewController()
+      ..setJavaScriptMode(JavaScriptMode.unrestricted)
+      ..loadRequest(
+          Uri.parse('https://sat-t.gob.pe/consulta_deuda_tributaria'));
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text('Consulta de Deuda')),
+      body: WebViewWidget(controller: controller),
     );
   }
 }
