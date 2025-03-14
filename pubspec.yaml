@@ -35,7 +35,8 @@ dependencies:
   webview_flutter: ^4.10.0
   intl: ^0.20.2
   crypto: ^3.0.6
-  url_launcher: ^6.0.20
+  url_launcher: ^6.3.1
+  #url_launcher_android: 6.3.14
 
 dev_dependencies:
   flutter_test:

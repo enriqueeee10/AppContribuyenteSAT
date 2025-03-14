@@ -19,23 +19,23 @@ class CuotaTable extends StatelessWidget {
     bool allSelected = seleccionadas.values.every((isSelected) => isSelected);
 
     return SingleChildScrollView(
-      scrollDirection: Axis.horizontal,
+      scrollDirection: Axis.vertical,
       child: SizedBox(
         width: MediaQuery.of(context).size.width,
         child: PaginatedDataTable(
           header: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               const Text(
                 "Listado de Deudas",
                 style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
               ),
-              Checkbox(
-                value: allSelected,
-                onChanged: (value) {
-                  onSelectAll(value ?? true);
-                },
-              ),
+              // Checkbox(
+              //   value: allSelected,
+              //   onChanged: (value) {
+              //     onSelectAll(value ?? true);
+              //   },
+              // ),
             ],
           ),
           columns: const [

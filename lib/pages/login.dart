@@ -80,7 +80,7 @@ class _LoginScreenState extends State<LoginScreen> {
             // Logo
             Image.asset(
               "assets/sat-logo.png",
-              height: 150, // Ajusta la altura según sea necesario
+              height: 120, // Ajusta la altura según sea necesario
               width: 250, // Ajusta el ancho según sea necesario
               fit: BoxFit.contain,
             ),
@@ -96,7 +96,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   boxShadow: [
                     BoxShadow(
                       color: Colors.black26,
-                      blurRadius: 400,
+                      blurRadius: 20,
                       offset: Offset(0, 5),
                     ),
                   ],
@@ -123,7 +123,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                         validator: validateEmail,
                       ),
-                      const SizedBox(height: 10),
+                      const SizedBox(height: 5),
                       // Campo de código de contribuyente
                       TextFormField(
                         controller: codeController,
@@ -158,7 +158,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         },
                       ),
 
-                      const SizedBox(height: 20),
+                      const SizedBox(height: 5.0),
 
                       // Botón Consultar Deuda
 
@@ -169,7 +169,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => RegistratonPage()),
+                                builder: (context) => UpdatePage()),
                           );
                         },
                         style: ElevatedButton.styleFrom(
@@ -177,9 +177,9 @@ class _LoginScreenState extends State<LoginScreen> {
                           foregroundColor: Colors.white,
                           minimumSize: Size(double.infinity, 45.0),
                         ),
-                        child: const Text("REGISTRARSE"),
+                        child: const Text("Actualizar Datos"),
                       ),
-                      const SizedBox(height: 10),
+                      const SizedBox(height: 5),
 
                       ElevatedButton(
                         onPressed: () {
@@ -195,7 +195,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           foregroundColor: Colors.white,
                           minimumSize: Size(double.infinity, 45.0),
                         ),
-                        child: const Text("CONSULTAR DEUDA"),
+                        child: const Text("Consultar Deuda"),
                       ),
                       const SizedBox(height: 5),
                     ],

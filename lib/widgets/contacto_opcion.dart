@@ -31,7 +31,7 @@ class ContactoOpcion extends StatelessWidget {
       child: Column(
         children: [
           Icon(icon, color: Colors.white),
-          const SizedBox(height: 5),
+          const SizedBox(height: 2),
           Text(
             texto,
             style: const TextStyle(color: Colors.white),
