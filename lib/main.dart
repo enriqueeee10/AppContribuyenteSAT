@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_rest/pages/login.dart';
+import 'package:flutter_application_rest/pages/menu.dart';
+import 'package:flutter_application_rest/pages/splashPage.dart';
 
 void main() {
   runApp(MyApp());
@@ -12,9 +14,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Consulta de Deuda',
-      theme: ThemeData(primarySwatch: Colors.green),
-      home: LoginScreen(), // Pantalla de inicio
+      home: SplashScreen(), // Muestra el SplashScreen al inicio
     );
   }
 }
